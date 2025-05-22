@@ -42,8 +42,7 @@ Endpoints principais
 Pacientes (/pacientes)
 POST /pacientes – cria um paciente:
 
-json
-Copiar
+
 {
   "nome": "João da Silva",
   "endereco": "Rua das Palmeiras, 100",
