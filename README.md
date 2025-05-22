@@ -1,19 +1,18 @@
 PEDRO LOTÉRIO DOS SANTOS RM550909  
 LUCAS THOMAZETTE BENVENUTO RM98048  
 
-# Checkpoint 2 – Sistema de Agenda de Consultas
+# Checkpoint 3 – Sistema de Agenda de Consultas
 
-Projeto foi feito com o clone do meu projeto do primeiro checkpoint, por conta disso meu arquivo está com o nome "checkpoint1" ;)
-
-Projeto Java Spring Boot desenvolvido como parte do checkpoint da disciplina de Microservices (1º semestre/2025) – Prof. Antonio.
+Projeto Java Spring Boot desenvolvido como parte do Checkpoint 3 da disciplina de Microservices (1º semestre/2025 – FIAP – Prof. Antonio Carlos de Lima Júnior).
 
 ---
 
 ## Descrição
 
-Sistema simples de agendamento de consultas entre pacientes e profissionais de saúde.  
-A aplicação permite criar, listar, editar e excluir pacientes, profissionais e consultas.  
-Os dados são mantidos **em memória**.
+Sistema completo de agendamento de consultas entre pacientes e profissionais de saúde.  
+Permite criar, listar, editar e excluir pacientes, profissionais e consultas.  
+Inclui filtros avançados para consultas por status e intervalo de datas, além de estatísticas por profissional.  
+Dados são mantidos em memória, sem banco de dados.
 
 ---
 
@@ -30,21 +29,22 @@ Os dados são mantidos **em memória**.
 
 ## Como executar
 
-Rode o projeto com Maven:
+1. No terminal, na pasta do projeto, rode:
 
 ```bash
 mvn clean install
 mvn spring-boot:run
-Acesse no navegador:
+Abra a documentação Swagger:
 
 bash
 Copiar
 http://localhost:8080/swagger-ui/index.html
 Endpoints principais
 Pacientes (/pacientes)
-POST /pacientes: cria novo paciente
+POST /pacientes – cria um paciente:
 
-
+json
+Copiar
 {
   "nome": "João da Silva",
   "endereco": "Rua das Palmeiras, 100",
@@ -52,50 +52,74 @@ POST /pacientes: cria novo paciente
   "email": "joao@email.com",
   "telefoneCompleto": "(11) 99999-8888"
 }
-GET /pacientes: lista todos
+GET /pacientes – lista todos
 
-GET /pacientes/{id}: busca por ID
+GET /pacientes/{id} – busca por ID
 
-PUT /pacientes/{id}: atualiza paciente
+PUT /pacientes/{id} – atualiza paciente
 
-DELETE /pacientes/{id}: deleta paciente
+DELETE /pacientes/{id} – remove paciente
 
 Profissionais (/profissionais)
-POST /profissionais: cria profissional
+POST /profissionais – cria profissional:
 
-
+json
+Copiar
 {
   "nome": "Dra. Maria Andrade",
   "especialidade": "Psicologia",
   "valorHora": 150.0
 }
-GET /profissionais: lista todos
+GET /profissionais – lista todos
 
-GET /profissionais/{id}: busca por ID
+GET /profissionais/{id} – busca por ID
 
-PUT /profissionais/{id}: atualiza profissional
+PUT /profissionais/{id} – atualiza profissional
 
-DELETE /profissionais/{id}: deleta profissional
+DELETE /profissionais/{id} – remove profissional
+
+GET /profissionais/{id}/stats – retorna total recebido e total de horas do profissional
 
 Consultas (/consultas)
-POST /consultas: agendar nova consulta
+POST /consultas – agenda nova consulta:
 
-
+json
+Copiar
 {
   "profissionalId": 1,
   "pacienteId": 1,
   "dataConsulta": "2025-05-05T10:00:00",
   "statusConsulta": "AGENDADA",
   "quantidadeHoras": 2,
-  "valorConsulta": 300.0
+  "valorConsulta": 0
 }
-GET /consultas: lista todas
+Nota: O valor da consulta é calculado automaticamente multiplicando quantidadeHoras pelo valorHora do profissional.
 
-GET /consultas/{id}: busca por ID
+GET /consultas – lista todas as consultas
 
-PUT /consultas/{id}: atualiza dados da consulta
+GET /consultas/{id} – busca por ID
 
-DELETE /consultas/{id}: remove consulta
+PUT /consultas/{id} – atualiza dados da consulta
 
-Esses foram exemplos que fiz e funcionaram perfeitamente no Swagger.
-O sistema está 100% funcional conforme o enunciado do checkpoint.
+DELETE /consultas/{id} – remove consulta
+
+Endpoints com filtros avançados
+GET /consultas?status={AGENDADA,REALIZADA,CANCELADA}&data_de=dd-MM-yyyy'T'HH:mm&data_ate=dd-MM-yyyy'T'HH:mm
+Lista consultas filtrando por status e intervalo de datas.
+
+GET /pacientes/{id}/consultas?status=...&data_de=...&data_ate=...
+Lista consultas filtrando pelo paciente.
+
+GET /profissionais/{id}/consultas?status=...&data_de=...&data_ate=...
+Lista consultas filtrando pelo profissional.
+
+Exemplo de filtro por consulta
+bash
+Copiar
+GET /consultas?status=AGENDADA&data_de=24-04-2025T00:00&data_ate=30-04-2025T23:59
+Observações finais
+Todos os dados são mantidos em memória, para simplificar o projeto.
+
+O sistema está pronto para testes via Swagger UI ou Postman.
+
+Código modularizado seguindo padrão MVC e boas práticas REST.
