@@ -36,8 +36,7 @@ mvn clean install
 mvn spring-boot:run
 Abra a documentação Swagger:
 
-bash
-Copiar
+
 http://localhost:8080/swagger-ui/index.html
 Endpoints principais
 Pacientes (/pacientes)
@@ -63,8 +62,7 @@ DELETE /pacientes/{id} – remove paciente
 Profissionais (/profissionais)
 POST /profissionais – cria profissional:
 
-json
-Copiar
+
 {
   "nome": "Dra. Maria Andrade",
   "especialidade": "Psicologia",
@@ -83,8 +81,7 @@ GET /profissionais/{id}/stats – retorna total recebido e total de horas do pro
 Consultas (/consultas)
 POST /consultas – agenda nova consulta:
 
-json
-Copiar
+
 {
   "profissionalId": 1,
   "pacienteId": 1,
@@ -114,8 +111,7 @@ GET /profissionais/{id}/consultas?status=...&data_de=...&data_ate=...
 Lista consultas filtrando pelo profissional.
 
 Exemplo de filtro por consulta
-bash
-Copiar
+
 GET /consultas?status=AGENDADA&data_de=24-04-2025T00:00&data_ate=30-04-2025T23:59
 Observações finais
 Todos os dados são mantidos em memória, para simplificar o projeto.
